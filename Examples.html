@@ -1,0 +1,487 @@
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<!DOCTYPE html>
+
+<script src="jquery.min.js" type="text/javascript"></script>
+<html>
+<head>
+
+</head>
+<body>
+
+    <!---------------------------------------------------------------->
+    <!------------------------------Select---------------------------->
+    <!---------------------------------------------------------------->
+
+    <script type="text/javascript">
+
+        //this.g = "g0";
+        //加载按钮事件
+        $(document).ready(function () {
+            this.g = "g1"
+            $("#addEvent_js").click
+                (
+                
+                    function ()
+                    {
+                        //var g = "g2";
+                        //addEvent_js();
+                        alert(g);
+                    }
+                );
+
+
+            $("#addEvent_jq").click(function () {addEvent_jq();});
+            $("#delEvent_js").click(function () {delEvent_js();});
+            $("#delEvent_jq").click(function () {delEvent_jq();});
+        });
+
+        //js添加文本框回车事件
+        function addEvent_js() {
+            document.getElementById('select_value').addEventListener('Keypress', txtKeypress, false)
+        }
+
+        //js移除文本框回车事件
+        function delEvent_js() {
+            document.getElementById('select_value').removeEventListener('Keypress', function (event) {
+
+            }, false)
+        }
+
+        //jq添加文本框点击事件
+        function addEvent_jq() {
+            $("#select_value").attr("onclick", "txtonclick()");
+        }
+
+        //jq移除文本框点击事件
+        function delEvent_jq() {
+            $("#select_value").removeAttr("onclick");
+        }
+
+
+        //回车事件
+        function txtKeypress() {
+            alert($("#select_value").val());
+        }
+        //点击事件
+        function txtClick() {
+            alert($("#select_value").val());
+            
+        }
+
+
+
+
+    </script>
+
+    <h1>事件</h1>
+
+    <input type="text" id="select_value" />
+
+    <br /><br />
+    <input type="button" id="addEvent_js" value="JS方式添加事件" /> 注:该按钮为文本框增加"回车"事件
+    <br /><br />
+    <input type="button" id="delEvent_js" value="JS方式移除事件" /> 注:该按钮为文本框移除"回车"事件
+    <br /><br />
+    <input type="button" id="addEvent_jq" value="JQ方式添加事件" /> 注:该按钮为文本框增加"点击"事件
+    <br /><br />
+    <input type="button" id="delEvent_jq" value="JQ方式移除事件" /> 注:该按钮为文本框移除"点击"事件
+    <br /><br />
+    <input type="button"  value="test" onclick="test()" /> 注:该按钮为文本框移除"点击"事件
+    <br /><br />
+
+
+
+    <!---------------------------------------------------------------->
+    <!------------------------------Select---------------------------->
+    <!---------------------------------------------------------------->
+
+    <script type="text/javascript">
+        function showvalue_js_id()
+        {
+            var obj = document.getElementById('selectid');
+            var index = obj.selectedIndex;
+            var text = obj.options[index].text;
+            var value = obj.options[index].value;
+            alert(text);
+        }
+        function showvalue_js_name() {
+            var obj = document.getElementsByName('selectname')[0];
+            var index = obj.selectedIndex;
+            var text = obj.options[index].text;
+            var value = obj.options[index].value;
+            alert(text);
+        }
+        function showvalue_js_class() {
+            var obj = document.getElementsByClassName('selectclass')[0];
+            var index = obj.selectedIndex;
+            var text = obj.options[index].text;
+            var value = obj.options[index].value;
+            alert(text);
+        }
+
+        function showvalue_jq_id() {
+            var obj = $("#selectid option:selected");
+            var index = obj.selectedIndex;
+            var text = obj.text();
+            var value = obj.val();
+            alert(value);
+        }
+        function showvalue_jq_name() {
+            var obj = $("select[name='selectname'] option:selected");
+            var index = obj.selectedIndex;
+            var text = obj.text();
+            var value = obj.val();
+            alert(value);
+        }
+        function showvalue_jq_class() {
+            var obj = $(".select[class='selectclass'] option:selected");
+            var index = obj.selectedIndex;
+            var text = obj.text();
+            var value = obj.val(); 
+            alert(value);
+        }
+
+        //移除全部option
+        function selectRemoveAll()
+        {
+            var obj = document.getElementById('selectid');
+            obj.options.length = 0;
+        }
+
+        //添加select_option事件
+        function selectAdd()
+        {
+            var obj = document.getElementById('selectid');
+            if ($("#select_value").val() == "") {
+                var option = new Option("文本", "值");
+            }
+            else {
+                var option = new Option($("#select_value").val(), "值");
+            }
+            
+            obj.add(option); //这个只能在IE中有效 
+            //obj.options.add(new Option("text", "value")); //这个兼容IE与firefox 
+        }
+
+        //加载事件
+        $(document).ready(function () {
+
+            $("#selectid").change(function (ever) {
+                var index = ever.currentTarget.selectedIndex
+                var value = ever.currentTarget.value;
+                alert(value);
+            })
+
+            //document.getElementById('selectid').addEventListener('change', function () {
+            //    /* Act on the event */
+            //    alert("ads");
+            //}, false);
+        });
+
+        //移除事件
+        function ReEvent()
+        {
+            $("#select_value").removeAttr("onclick");
+        }
+
+        //添加事件
+        function AddEvent() {
+            $("#select_value").attr("onclick", "showTextValue()");
+        }
+
+        function showTextValue() {
+            alert($("#select_value").val());
+        }
+
+
+    </script>
+
+    <h1>Select</h1>
+    <select id="selectid" name="selectname" class="selectclass">
+        <option>Volvo</option>
+        <option>Saab</option>
+        <option>Mercedes</option>
+        <option>Audi</option>
+    </select>
+
+    <input type="text" id="select_value" onclick="showTextValue()" />
+    <input type="button" onclick="ReEvent()" value="移除事件" />
+    <input type="button" onclick="AddEvent()" value="添加事件" />
+
+    <br /><br />
+
+    <input type="button" onclick="showvalue_js_id()" value="js通过domID获取选中值" />
+    <input type="button" onclick="showvalue_js_name()" value="js通过domName获取选中值" />
+    <input type="button" onclick="showvalue_js_class()" value="js通过domclass获取选中值" />
+    <br /><br />
+    <input type="button" onclick="showvalue_jq_id()" value="jq通过domID获取选中值" />
+    <input type="button" onclick="showvalue_jq_name()" value="jq通过domName获取选中值" />
+    <input type="button" onclick="showvalue_jq_class()" value="jq通过domclass获取选中值" />
+    <br /><br />
+    <input type="button" onclick="selectRemoveAll()" value="清空选项" />
+    <input type="button" onclick="selectAdd()" value="增加选项" />
+
+
+    <!---------------------------------------------------------------->
+    <!----------------------------Checkbox---------------------------->
+    <!---------------------------------------------------------------->
+    <script type="text/javascript">
+        //jq全选checkbox
+        function selectAll_jq() {
+            var id = $("input[name='checkbox']");
+            if (id[0].checked == true) {
+                for (var i = 0; i < id.length; i++) {
+                    id[i].checked = false;
+                }
+            }
+            else {
+                for (var i = 0; i < id.length; i++) {
+                    id[i].checked = true;
+                }
+            }
+        }
+
+        function loadSelectValue_jq() {
+            var id = $("input[name='checkbox']");
+            var value = new Array();
+            for (var i = 0; i < id.length; i++) {
+                if (id[i].checked == true)
+                    value.push(id[i].value);
+            }
+            $('#checkbox_value').html(value.toString())
+        }
+
+        //js全选CheckBox
+        function selectAll_js() {
+            var id = document.getElementsByName('checkbox');
+            if (id[0].checked) {
+                for (var i = 0; i < id.length; i++) {
+                    id[i].checked = false;
+                }
+            }
+            else {
+                for (var i = 0; i < id.length; i++) {
+                    id[i].checked = true;
+                }
+            }
+        }
+
+        //获取勾选的checkbox
+        function loadSelectValue_js() {
+            var id = document.getElementsByName('checkbox');
+            var value = new Array();
+            for (var i = 0; i < id.length; i++) {
+                if (id[i].checked)
+                    value.push(id[i].value);
+            }
+            document.getElementById('checkbox_value').innerHTML = value;
+        }
+    </script>
+
+    <h1>CheckBox</h1>
+    <input type="checkbox" id="checkbox1" name="checkbox" class="checkbox1" value="选项1" /> 选项1
+    <input type="checkbox" id="checkbox2" name="checkbox" class="checkbox2" value="选项2" /> 选项2
+    <input type="checkbox" id="checkbox3" name="checkbox" class="checkbox3" value="选项3" /> 选项3
+    <input type="checkbox" id="checkbox4" name="checkbox" class="checkbox4" value="选项4" /> 选项4
+    <input type="checkbox" id="checkbox5" name="checkbox" class="checkbox5" value="选项5" /> 选项5
+
+
+    </br></br>
+    获取选中的值: <label id="checkbox_value" style="font-weight:bold"></label>
+
+    </br></br></br>
+    <input type="button" value="jq全选" onclick="selectAll_jq()" />
+    <input type="button" value="jq获取选中值" onclick="loadSelectValue_jq()" />
+    <input type="button" value="js全选" onclick="selectAll_js()" />
+    <input type="button" value="js获取选中值" onclick="loadSelectValue_js()" />
+
+
+    <!---------------------------------------------------------------->
+    <!------------------------------Radio----------------------------->
+    <!---------------------------------------------------------------->
+    <script type="text/javascript">
+
+        
+
+        //jq选择Radio
+        function selectMan_jq() {
+
+            if ($("#ManID").prop("checked") == false) {
+                $("#ManID").prop("checked", "checked");
+            }
+            else {
+                $("#ManID").removeProp("checked");
+            }
+
+            var value = $("input[name='RadioName']:eq(0)").val();
+            $("#radio_value").html(value);
+        }
+
+        function selectWoMan_jq() {
+            if ($("#WoManID").prop("checked") == false) {
+                $("#WoManID").prop("checked", "checked");
+            }
+            else {
+                $("#WoManID").removeProp("checked");
+            }
+
+            var value = $("input[name='RadioName']:eq(1)").val();
+            $("#radio_value").html(value);
+        }
+
+        //js选择Radio
+        function selectMan_js() {
+            if (document.getElementById("ManID").checked == false) {
+                document.getElementById("ManID").checked = true
+            }
+            else {
+                document.getElementById("ManID").checked = false;
+            }
+            document.getElementById("selectvalue").innerHTML = document.getElementById("ManID").value;
+        }
+
+        function selectWoMan_js() {
+            if (document.getElementById("WoManID").checked == false) {
+                document.getElementById("WoManID").checked = true
+            }
+            else {
+                document.getElementById("WoManID").checked = false;
+            }
+            document.getElementById("selectvalue").innerHTML = document.getElementById("WoManID").value;
+        }
+    </script>
+
+    <h1>Radio</h1>
+    <input type="radio" id="ManID" name="RadioName" class="ManClass" value="男" /> 男
+    <input type="radio" id="WoManID" name="RadioName" class="WoManClass" value="女" /> 女
+    <br /><br />
+    获取选中的值: <label id="radio_value"></label>
+
+    <br /><br />
+    <input type="button" value="jq选择男" onclick="selectMan_jq()" />
+    <input type="button" value="jq选择女" onclick="selectWoMan_jq()" />
+    <br /><br />
+    <input type="button" value="js选择男" onclick="selectMan_js()" />
+    <input type="button" value="js选择女" onclick="selectWoMan_js()" />
+
+
+
+    <!---------------------------------------------------------------->
+    <!------------------------------Table----------------------------->
+    <!---------------------------------------------------------------->
+    <script type="text/javascript">
+        function insRow_jq() {
+            var td = window.event.srcElement.parentNode;
+            var trHTML = '<tr><td><input type="text" /></td><td><input type="text" /></td><td><input type="button" onclick="insRow_jq(this)" value="jq新增行"></td><td><input type="button" onclick="delRow_jq(this)" value="jq删除行"></td><td><input type="button" onclick="insRow_js(this)" value="js新增行"></td><td><input type="button" onclick="delRow_js(this)" value="js删除行"></td></tr>'
+            $("#tbid tr:eq(" + td.parentNode.rowIndex + ")").after(trHTML);//
+        }
+
+        function delRow_jq() {
+            var td = window.event.srcElement.parentNode;
+
+            $("#tbid tr:eq(" + td.parentNode.rowIndex + ")").remove()//
+        }
+
+        function insRow_js(obj) {
+            
+            var td = window.event.srcElement.parentNode;
+            //if (/td/i.test(td.nodeName)) {
+                var obj = document.getElementById('tbid').insertRow(td.parentNode.rowIndex)
+                //var obj = document.getElementsByName('tname').insertRow(td.parentNode.rowIndex)
+                //var obj = document.getElementsByClassName('tclass').insertRow(td.parentNode.rowIndex);
+               //var dd= document.createElement("div");
+            //td.appendChild(dd);
+
+                var tdObj1 = obj.insertCell(0);
+                tdObj1.innerHTML = '<input type="text" />';
+                var tdObj2 = obj.insertCell(1);
+                tdObj2.innerHTML = '<input type="text" />';
+                var tdObj3 = obj.insertCell(2);
+                tdObj3.innerHTML = '<input type="button" onclick="insRow_jq(this)" value="jq新增行">';
+                var tdObj4 = obj.insertCell(3);
+                tdObj4.innerHTML = '<input type="button" onclick="delRow_jq(this)" value="jq删除行">';
+                var tdObj5 = obj.insertCell(4);
+                tdObj5.innerHTML = '<input type="button" onclick="insRow_js(this)" value="js新增行">';
+                var tdObj6 = obj.insertCell(5);
+                tdObj6.innerHTML = '<input type="button" onclick="delRow_js(this)" value="js删除行">';
+            //}
+        }
+
+        function delRow_js(trIndex) {
+            var td = window.event.srcElement.parentNode;
+            if (/td/i.test(td.nodeName)) {
+                document.getElementById('tbid').deleteRow(td.parentNode.rowIndex)
+            }
+        }
+    </script>
+    <h1>Table</h1>
+    <table id="tbid" name="tbname" class="tbcalss" border="0">
+        <tr>
+            <td><input type="text" value="xx"/></td>
+            <td><input type="text" value="xx"/></td>
+            <td><input type="button" onclick="insRow_jq(this)" value="jq新增行"></td>
+            <td><input type="button" onclick="delRow_jq(this)" value="jq删除行"></td>
+            <td><input type="button" onclick="insRow_js(this)" value="js新增行"></td>
+            <td><input type="button" onclick="delRow_js(this)" value="js删除行"></td>
+        </tr>
+        <tr>
+            <td><input type="text" value="xx"/></td>
+            <td><input type="text" value="xx"/></td>
+            <td><input type="button" onclick="insRow_jq(this)" value="jq新增行"></td>
+            <td><input type="button" onclick="delRow_jq(this)" value="jq删除行"></td>
+            <td><input type="button" onclick="insRow_js(this)" value="js新增行"></td>
+            <td><input type="button" onclick="delRow_js(this)" value="js删除行"></td>
+        </tr>
+    </table>
+
+
+    <!---------------------------------------------------------------->
+    <!-----------------------------TextArea--------------------------->
+    <!---------------------------------------------------------------->
+
+    <script type="text/javascript">
+        function jqShowValue_jq() {
+            alert($('#txtid').val());
+        }
+
+        function removeValue_jq() {
+            $("textarea[name='txtname']").val("");
+        }
+
+        function addHeight_jq() {
+            var height = $(".txtclass").outerHeight();
+            var newheight = (height + 10);
+            $(".txtclass").height(newheight);
+        }
+
+        //js操作TextArea
+        function jqShowValue_js() {
+            alert(document.getElementById('txtid').value);
+        }
+
+        function removeValue_js() {
+            document.getElementsByClassName('txtclass')[0].value = "";
+        }
+
+        function addHeight_js() {
+            var height = document.getElementsByClassName('txtclass')[0].style.height
+            var newheight = (parseInt(height.replace("px", "")) + 10);
+            document.getElementsByClassName('txtclass')[0].style.height = newheight;
+        }
+    </script>
+    <h1>TextArea</h1>
+    <h1>
+        <textarea id="txtid" name="txtname" class="txtclass" style="width:200px;height:100px"></textarea>
+
+        <input type="button" onclick="jqShowValue_jq()" value="jq弹出值" />
+        <input type="button" onclick="removeValue_jq()" value="jq清空值" />
+        <input type="button" onclick="addHeight_jq()" value="jq增加高度" />
+
+        <input type="button" onclick="jqShowValue_js()" value="js弹出值" />
+        <input type="button" onclick="removeValue_js()" value="js清空值"  />
+        <input type="button" onclick="addHeight_js()" value="js增加高度" />
+
+    </h1>
+
+</body>
+</html> 
