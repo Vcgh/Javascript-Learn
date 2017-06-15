@@ -1,0 +1,89 @@
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<!DOCTYPE html>
+<html>
+<head>
+     
+</head>
+<body>
+    <script src="jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+
+        //课程分数数据
+        var scores = [];
+        for (var i = 0; i < 5; i++) {
+            scores.push(new Score("课程" + i, 80 + i));
+        }
+
+        //学生信息
+        var stu = new Student("张三", 80, 180, scores);
+        
+        function Student(name, height, weight, scores) {
+            var calculate = function (scores) {
+                var f = 0;
+                for (var i = 0; i < scores.length; i++) {
+                    f += scores[i].scores;
+                    console.log(f);
+                }
+                return f;
+            }
+            
+            this.name = name;
+            this.height = height;
+            this.weight = weight;
+            this.ScoreTotal = calculate(scores);
+        }
+        
+        //定义分数对象
+        function Score(subject, scores) {
+            this.subject = subject;
+            this.scores = scores;
+        }
+
+        function btnClick() {
+            $("#name").val(stu.name);
+            $("#height").val(stu.height);
+            $("#weight").val(stu.weight);
+            $("#scoreTotal").val(stu.ScoreTotal);
+        }
+
+    </script>
+
+
+    
+    <br />
+    <table>
+        <tr>
+            <td>姓名</td>
+            <td>
+            <input type="text" id="name" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                身高:
+            </td>
+            <td>
+                <input type="text" id="height" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                体重:
+            </td>
+            <td>
+                <input type="text" id="weight" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                总分:
+            </td>
+            <td>
+                <input type="text" id="scoreTotal" />
+            </td>
+        </tr>
+    </table>
+    <br />
+    <input type="button" onclick="btnClick()" value="计算" />
+</body>
+</html> 
