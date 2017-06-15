@@ -92,7 +92,7 @@
                 var result = new Student($("#name").val(), $("#height").val(), $("#weight").val(), scores);
                 var ffff = result.name + "," + result.height + "," + result.weight + "," + result.ScoresSum() + "," + result.ScoresSum2() + "," + +result.subjectCount;
 
-                $("#lbResult").text(JSON.stringify(ffff));
+                $("#lbResult").text(JSON.stringify(result));
             });
         })
 
@@ -108,7 +108,7 @@
             this.weight = weightCalculate(weight)+"kg";
             this.height = height+"cm"
             this.subjectCount = scores.length;
-
+            this.ScoresSum3 = ScoresSum(scores);
             //原型方式创建对象
             if (typeof Student._lev == "undefined") {
                 Student.prototype.ScoresSum = function () {
@@ -118,7 +118,6 @@
                     }
                     return fen;
                 }
-
                 Student._lev = true;
             }
 
@@ -136,6 +135,16 @@
         function weightCalculate(weight)
         {
             return weight / 2;
+        }
+
+        function ScoresSum()
+        {
+                var fen = 0;
+                for (var i = 0; i<scores.length; i++)
+                {
+                    fen += parseInt(scores[i].fenshu);
+                }
+                return fen;
         }
 
     </script>
