@@ -14,87 +14,101 @@
 
     <script type="text/javascript">
 
-        //this.g = "g0";
-        //加载按钮事件
-        $(document).ready(function () {
-            this.g = "g1"
-            $("#addEvent_js").click
-                (
-                
-                    function ()
-                    {
-                        //var g = "g2";
-                        //addEvent_js();
-                        alert(g);
-                    }
-                );
-
-
-            $("#addEvent_jq").click(function () {addEvent_jq();});
-            $("#delEvent_js").click(function () {delEvent_js();});
-            $("#delEvent_jq").click(function () {delEvent_jq();});
-        });
-
-        //js添加文本框回车事件
-        function addEvent_js() {
-            document.getElementById('select_value').addEventListener('Keypress', txtKeypress, false)
-        }
-
-        //js移除文本框回车事件
-        function delEvent_js() {
-            document.getElementById('select_value').removeEventListener('Keypress', function (event) {
-
-            }, false)
-        }
-
-        //jq添加文本框点击事件
-        function addEvent_jq() {
-            $("#select_value").attr("onclick", "txtonclick()");
-        }
-
-        //jq移除文本框点击事件
-        function delEvent_jq() {
-            $("#select_value").removeAttr("onclick");
-        }
-
-
         //回车事件
         function txtKeypress() {
-            alert($("#select_value").val());
+            alert($("#Event_value").val());
         }
         //点击事件
         function txtClick() {
-            alert($("#select_value").val());
+            alert($("#Event_value").val());
             
         }
-
-
-
-
     </script>
 
     <h1>事件</h1>
+    <input type="text" id="Event_value" />
 
-    <input type="text" id="select_value" />
+    <h4>addEventListener方式:</h4>
+    <input type="button" value="JS方式添加事件" onclick="addEvent_js()" />
+    <input type="button" value="JS方式移除事件" onclick="delEvent_js()"/> 
+    <script type="text/javascript">
+        function addEvent_js() {
+            document.getElementById('Event_value').addEventListener("keydown", txtKeypress, false)
+        }
 
-    <br /><br />
-    <input type="button" id="addEvent_js" value="JS方式添加事件" /> 注:该按钮为文本框增加"回车"事件
-    <br /><br />
-    <input type="button" id="delEvent_js" value="JS方式移除事件" /> 注:该按钮为文本框移除"回车"事件
-    <br /><br />
-    <input type="button" id="addEvent_jq" value="JQ方式添加事件" /> 注:该按钮为文本框增加"点击"事件
-    <br /><br />
-    <input type="button" id="delEvent_jq" value="JQ方式移除事件" /> 注:该按钮为文本框移除"点击"事件
-    <br /><br />
-    <input type="button"  value="test" onclick="test()" /> 注:该按钮为文本框移除"点击"事件
-    <br /><br />
+        function delEvent_js() {
+            document.getElementById('Event_value').removeEventListener("keydown", txtKeypress, false)
+        }
+    </script>
 
+    <h4>att方式:</h4>
+    <input type="button" value="JQ方式添加事件" onclick="addEvent_jq()" /> 
+    <input type="button" value="JQ方式移除事件" onclick="delEvent_jq()"/> 
+    <script type="text/javascript">
+        function addEvent_jq() {
+            $("#Event_value").attr("onclick", "txtClick()");
+        }
 
+        function delEvent_jq() {
+            $("#Event_value").removeAttr("onclick");
+        }
+    </script>
+
+    <h4>页面加载方式:</h4>
+    <input type="button" id="addEvent_jq" value="JQ事件" />
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#addEvent_jq").click(function () { alert("页面加载时绑定点击事件") });
+        });
+    </script>
+ 
 
     <!---------------------------------------------------------------->
     <!------------------------------Select---------------------------->
     <!---------------------------------------------------------------->
 
+
+
+    <h1>Select</h1>
+    <select id="selectid" name="selectname" class="selectclass">
+        <option>Volvo</option>
+        <option>Saab</option>
+        <option>Mercedes</option>
+        <option>Audi</option>
+    </select>
+
+    <h4>添加到Option</h4>
+    <input type="text" id="select_value"/>
+    <input type="button" onclick="selectAdd()" value="增加选项" />
+    <script type="text/javascript">
+        function selectAdd() {
+            var obj = document.getElementById('selectid');
+            if ($("#select_value").val() != "") {
+                var option = new Option($("#select_value").val(), "值");
+            }
+
+            obj.add(option); //这个只能在IE中有效
+            //obj.options.add(new Option("text", "value")); //这个兼容IE与firefox
+        }
+    </script>
+    
+    <h4>清空select</h4>
+    <input type="button" onclick="selectRemoveAll()" value="清空选项" />
+    <script type="text/javascript">
+        function selectRemoveAll() {
+            var obj = document.getElementById('selectid');
+            obj.options.length = 0;
+        }
+    </script>
+
+    <h4>获取选中值</h4>
+    <input type="button" onclick="showvalue_js_id()" value="js通过domID获取选中值" />
+    <input type="button" onclick="showvalue_js_name()" value="js通过domName获取选中值" />
+    <input type="button" onclick="showvalue_js_class()" value="js通过domclass获取选中值" />
+    <input type="button" onclick="showvalue_jq_id()" value="jq通过domID获取选中值" />
+    <input type="button" onclick="showvalue_jq_name()" value="jq通过domName获取选中值" />
+    <input type="button" onclick="showvalue_jq_class()" value="jq通过domclass获取选中值" />
+    
     <script type="text/javascript">
         function showvalue_js_id()
         {
@@ -137,121 +151,25 @@
             var obj = $(".select[class='selectclass'] option:selected");
             var index = obj.selectedIndex;
             var text = obj.text();
-            var value = obj.val(); 
+            var value = obj.val();
             alert(value);
         }
-
-        //移除全部option
-        function selectRemoveAll()
-        {
-            var obj = document.getElementById('selectid');
-            obj.options.length = 0;
-        }
-
-        //添加select_option事件
-        function selectAdd()
-        {
-            var obj = document.getElementById('selectid');
-            if ($("#select_value").val() == "") {
-                var option = new Option("文本", "值");
-            }
-            else {
-                var option = new Option($("#select_value").val(), "值");
-            }
-            
-            obj.add(option); //这个只能在IE中有效 
-            //obj.options.add(new Option("text", "value")); //这个兼容IE与firefox 
-        }
-
-        //加载事件
-        $(document).ready(function () {
-
-            $("#selectid").change(function (ever) {
-                var index = ever.currentTarget.selectedIndex
-                var value = ever.currentTarget.value;
-                alert(value);
-            })
-
-            //document.getElementById('selectid').addEventListener('change', function () {
-            //    /* Act on the event */
-            //    alert("ads");
-            //}, false);
-        });
-
-        //移除事件
-        function ReEvent()
-        {
-            $("#select_value").removeAttr("onclick");
-        }
-
-        //添加事件
-        function AddEvent() {
-            $("#select_value").attr("onclick", "showTextValue()");
-        }
-
-        function showTextValue() {
-            alert($("#select_value").val());
-        }
-
-
     </script>
 
-    <h1>Select</h1>
-    <select id="selectid" name="selectname" class="selectclass">
-        <option>Volvo</option>
-        <option>Saab</option>
-        <option>Mercedes</option>
-        <option>Audi</option>
-    </select>
-
-    <input type="text" id="select_value" onclick="showTextValue()" />
-    <input type="button" onclick="ReEvent()" value="移除事件" />
-    <input type="button" onclick="AddEvent()" value="添加事件" />
-
-    <br /><br />
-
-    <input type="button" onclick="showvalue_js_id()" value="js通过domID获取选中值" />
-    <input type="button" onclick="showvalue_js_name()" value="js通过domName获取选中值" />
-    <input type="button" onclick="showvalue_js_class()" value="js通过domclass获取选中值" />
-    <br /><br />
-    <input type="button" onclick="showvalue_jq_id()" value="jq通过domID获取选中值" />
-    <input type="button" onclick="showvalue_jq_name()" value="jq通过domName获取选中值" />
-    <input type="button" onclick="showvalue_jq_class()" value="jq通过domclass获取选中值" />
-    <br /><br />
-    <input type="button" onclick="selectRemoveAll()" value="清空选项" />
-    <input type="button" onclick="selectAdd()" value="增加选项" />
+    <h1>CheckBox</h1>
+    <input type="checkbox" id="checkbox1" name="checkbox" class="checkbox1" value="选项1" /> 选项1
+    <input type="checkbox" id="checkbox2" name="checkbox" class="checkbox2" value="选项2" /> 选项2
+    <input type="checkbox" id="checkbox3" name="checkbox" class="checkbox3" value="选项3" /> 选项3
+    <input type="checkbox" id="checkbox4" name="checkbox" class="checkbox4" value="选项4" /> 选项4
+    <input type="checkbox" id="checkbox5" name="checkbox" class="checkbox5" value="选项5" /> 选项5
 
 
-    <!---------------------------------------------------------------->
-    <!----------------------------Checkbox---------------------------->
-    <!---------------------------------------------------------------->
+    </br></br>
+    选中的值: <label id="checkbox_value" style="font-weight:bold"></label>
+
+    <h4>全选/反选</h4>
+    <input type="button" value="js全选" onclick="selectAll_js()" />
     <script type="text/javascript">
-        //jq全选checkbox
-        function selectAll_jq() {
-            var id = $("input[name='checkbox']");
-            if (id[0].checked == true) {
-                for (var i = 0; i < id.length; i++) {
-                    id[i].checked = false;
-                }
-            }
-            else {
-                for (var i = 0; i < id.length; i++) {
-                    id[i].checked = true;
-                }
-            }
-        }
-
-        function loadSelectValue_jq() {
-            var id = $("input[name='checkbox']");
-            var value = new Array();
-            for (var i = 0; i < id.length; i++) {
-                if (id[i].checked == true)
-                    value.push(id[i].value);
-            }
-            $('#checkbox_value').html(value.toString())
-        }
-
-        //js全选CheckBox
         function selectAll_js() {
             var id = document.getElementsByName('checkbox');
             if (id[0].checked) {
@@ -265,8 +183,11 @@
                 }
             }
         }
+    </script>
 
-        //获取勾选的checkbox
+    <h4>获取选中值</h4>
+    <input type="button" value="js获取选中值" onclick="loadSelectValue_js()" />
+    <script type="text/javascript">
         function loadSelectValue_js() {
             var id = document.getElementsByName('checkbox');
             var value = new Array();
@@ -278,32 +199,23 @@
         }
     </script>
 
-    <h1>CheckBox</h1>
-    <input type="checkbox" id="checkbox1" name="checkbox" class="checkbox1" value="选项1" /> 选项1
-    <input type="checkbox" id="checkbox2" name="checkbox" class="checkbox2" value="选项2" /> 选项2
-    <input type="checkbox" id="checkbox3" name="checkbox" class="checkbox3" value="选项3" /> 选项3
-    <input type="checkbox" id="checkbox4" name="checkbox" class="checkbox4" value="选项4" /> 选项4
-    <input type="checkbox" id="checkbox5" name="checkbox" class="checkbox5" value="选项5" /> 选项5
-
-
-    </br></br>
-    获取选中的值: <label id="checkbox_value" style="font-weight:bold"></label>
-
-    </br></br></br>
-    <input type="button" value="jq全选" onclick="selectAll_jq()" />
-    <input type="button" value="jq获取选中值" onclick="loadSelectValue_jq()" />
-    <input type="button" value="js全选" onclick="selectAll_js()" />
-    <input type="button" value="js获取选中值" onclick="loadSelectValue_js()" />
-
 
     <!---------------------------------------------------------------->
     <!------------------------------Radio----------------------------->
     <!---------------------------------------------------------------->
+
+
+    <h1>Radio</h1>
+    <input type="radio" id="ManID" name="RadioName" class="ManClass" value="男" /> 男
+    <input type="radio" id="WoManID" name="RadioName" class="WoManClass" value="女" /> 女
+    
+    <br /><br />
+    选中的是: <label id="radio_value"></label>
+
+    <br /><br />
+    <input type="button" value="jq选择男" onclick="selectMan_jq()" />
+    <input type="button" value="js选择女" onclick="selectWoMan_js()" />
     <script type="text/javascript">
-
-        
-
-        //jq选择Radio
         function selectMan_jq() {
 
             if ($("#ManID").prop("checked") == false) {
@@ -317,29 +229,6 @@
             $("#radio_value").html(value);
         }
 
-        function selectWoMan_jq() {
-            if ($("#WoManID").prop("checked") == false) {
-                $("#WoManID").prop("checked", "checked");
-            }
-            else {
-                $("#WoManID").removeProp("checked");
-            }
-
-            var value = $("input[name='RadioName']:eq(1)").val();
-            $("#radio_value").html(value);
-        }
-
-        //js选择Radio
-        function selectMan_js() {
-            if (document.getElementById("ManID").checked == false) {
-                document.getElementById("ManID").checked = true
-            }
-            else {
-                document.getElementById("ManID").checked = false;
-            }
-            document.getElementById("selectvalue").innerHTML = document.getElementById("ManID").value;
-        }
-
         function selectWoMan_js() {
             if (document.getElementById("WoManID").checked == false) {
                 document.getElementById("WoManID").checked = true
@@ -347,23 +236,9 @@
             else {
                 document.getElementById("WoManID").checked = false;
             }
-            document.getElementById("selectvalue").innerHTML = document.getElementById("WoManID").value;
+            document.getElementById("radio_value").innerHTML = document.getElementById("WoManID").value;
         }
     </script>
-
-    <h1>Radio</h1>
-    <input type="radio" id="ManID" name="RadioName" class="ManClass" value="男" /> 男
-    <input type="radio" id="WoManID" name="RadioName" class="WoManClass" value="女" /> 女
-    <br /><br />
-    获取选中的值: <label id="radio_value"></label>
-
-    <br /><br />
-    <input type="button" value="jq选择男" onclick="selectMan_jq()" />
-    <input type="button" value="jq选择女" onclick="selectWoMan_jq()" />
-    <br /><br />
-    <input type="button" value="js选择男" onclick="selectMan_js()" />
-    <input type="button" value="js选择女" onclick="selectWoMan_js()" />
-
 
 
     <!---------------------------------------------------------------->
