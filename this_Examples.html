@@ -1,0 +1,48 @@
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+
+
+
+    <script src="jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        
+        this.a = 0;
+
+        function tt()
+        {
+            this.a = 3;
+
+            a = 4;
+        }
+
+        function fn() {
+
+            console.log(this.a);
+
+            //var dd = new tt();
+            console.log(a);
+        }
+
+        var obj = {
+
+            a: 2,
+
+            fn: fn
+
+        };
+
+        obj.fn();
+
+        
+
+    </script>
+
+
+
+</body>
+</html> 

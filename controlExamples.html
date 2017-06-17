@@ -245,48 +245,41 @@
     <!------------------------------Table----------------------------->
     <!---------------------------------------------------------------->
     <script type="text/javascript">
+        //JQ after方式 ,用srcElement 取控件 拿到行号
         function insRow_jq() {
             var td = window.event.srcElement.parentNode;
-            var trHTML = '<tr><td><input type="text" /></td><td><input type="text" /></td><td><input type="button" onclick="insRow_jq(this)" value="jq新增行"></td><td><input type="button" onclick="delRow_jq(this)" value="jq删除行"></td><td><input type="button" onclick="insRow_js(this)" value="js新增行"></td><td><input type="button" onclick="delRow_js(this)" value="js删除行"></td></tr>'
+            var trHTML = '<tr><td><input type="text" /></td><td><input type="text" /></td><td><input type="button" onclick="insRow_jq()" value="jq新增行"></td><td><input type="button" onclick="delRow_jq()" value="jq删除行"></td><td><input type="button" onclick="insRow_js(this)" value="js新增行"></td><td><input type="button" onclick="delRow_js(this)" value="js删除行"></td></tr>'
             $("#tbid tr:eq(" + td.parentNode.rowIndex + ")").after(trHTML);//
         }
 
         function delRow_jq() {
-            var td = window.event.srcElement.parentNode;
-
-            $("#tbid tr:eq(" + td.parentNode.rowIndex + ")").remove()//
+            var tr = window.event.srcElement.parentNode.parentNode; //IE8以下报错
+            $("#tbid tr:eq(" + tr.rowIndex + ")").remove();
         }
 
-        function insRow_js(obj) {
+        //JS insertRow方式, 通过this拿到行号
+        function insRow_js(thisControl) {
             
-            var td = window.event.srcElement.parentNode;
-            //if (/td/i.test(td.nodeName)) {
-                var obj = document.getElementById('tbid').insertRow(td.parentNode.rowIndex)
-                //var obj = document.getElementsByName('tname').insertRow(td.parentNode.rowIndex)
-                //var obj = document.getElementsByClassName('tclass').insertRow(td.parentNode.rowIndex);
-               //var dd= document.createElement("div");
-            //td.appendChild(dd);
+            var rowIndex = thisControl.parentNode.parentNode.rowIndex; //点击的那一行
+            var obj = document.getElementById('tbid').insertRow(rowIndex) //在指定行位置插入新行
 
-                var tdObj1 = obj.insertCell(0);
-                tdObj1.innerHTML = '<input type="text" />';
-                var tdObj2 = obj.insertCell(1);
-                tdObj2.innerHTML = '<input type="text" />';
-                var tdObj3 = obj.insertCell(2);
-                tdObj3.innerHTML = '<input type="button" onclick="insRow_jq(this)" value="jq新增行">';
-                var tdObj4 = obj.insertCell(3);
-                tdObj4.innerHTML = '<input type="button" onclick="delRow_jq(this)" value="jq删除行">';
-                var tdObj5 = obj.insertCell(4);
-                tdObj5.innerHTML = '<input type="button" onclick="insRow_js(this)" value="js新增行">';
-                var tdObj6 = obj.insertCell(5);
-                tdObj6.innerHTML = '<input type="button" onclick="delRow_js(this)" value="js删除行">';
-            //}
+            var tdObj1 = obj.insertCell(0);
+            tdObj1.innerHTML = '<input type="text" />';
+            var tdObj2 = obj.insertCell(1);
+            tdObj2.innerHTML = '<input type="text" />';
+            var tdObj3 = obj.insertCell(2);
+            tdObj3.innerHTML = '<input type="button" onclick="insRow_jq()" value="jq新增行">';
+            var tdObj4 = obj.insertCell(3);
+            tdObj4.innerHTML = '<input type="button" onclick="delRow_jq()" value="jq删除行">';
+            var tdObj5 = obj.insertCell(4);
+            tdObj5.innerHTML = '<input type="button" onclick="insRow_js(this)" value="js新增行">';
+            var tdObj6 = obj.insertCell(5);
+            tdObj6.innerHTML = '<input type="button" onclick="delRow_js(this)" value="js删除行">';
         }
 
-        function delRow_js(trIndex) {
-            var td = window.event.srcElement.parentNode;
-            if (/td/i.test(td.nodeName)) {
-                document.getElementById('tbid').deleteRow(td.parentNode.rowIndex)
-            }
+        function delRow_js(obj) {
+            var rowIndex = obj.parentNode.parentNode.rowIndex;
+            document.getElementById('tbid').deleteRow(rowIndex)
         }
     </script>
     <h1>Table</h1>
@@ -294,16 +287,16 @@
         <tr>
             <td><input type="text" value="xx"/></td>
             <td><input type="text" value="xx"/></td>
-            <td><input type="button" onclick="insRow_jq(this)" value="jq新增行"></td>
-            <td><input type="button" onclick="delRow_jq(this)" value="jq删除行"></td>
+            <td><input type="button" onclick="insRow_jq()" value="jq新增行"></td>
+            <td><input type="button" onclick="delRow_jq()" value="jq删除行"></td>
             <td><input type="button" onclick="insRow_js(this)" value="js新增行"></td>
             <td><input type="button" onclick="delRow_js(this)" value="js删除行"></td>
         </tr>
         <tr>
             <td><input type="text" value="xx"/></td>
             <td><input type="text" value="xx"/></td>
-            <td><input type="button" onclick="insRow_jq(this)" value="jq新增行"></td>
-            <td><input type="button" onclick="delRow_jq(this)" value="jq删除行"></td>
+            <td><input type="button" onclick="insRow_jq()" value="jq新增行"></td>
+            <td><input type="button" onclick="delRow_jq()" value="jq删除行"></td>
             <td><input type="button" onclick="insRow_js(this)" value="js新增行"></td>
             <td><input type="button" onclick="delRow_js(this)" value="js删除行"></td>
         </tr>

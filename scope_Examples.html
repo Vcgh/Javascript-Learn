@@ -1,0 +1,88 @@
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+
+
+
+    <script src="jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        
+
+        ////变量作用域
+        var a = "1";
+        function fn() {
+            console.log(a);
+            var a = "2";
+            console.log(a);
+            console.log(this.a)
+        }
+
+        var obj = { a: 99, fn: fn }
+        obj.fn();
+
+        ////变量作用域
+        
+        //var a = "1";
+        //function fn()
+        //{
+        //    console.log(a);
+        //    var a = "2";
+        //    console.log(a);
+        //}
+        //fn();
+
+
+        ////函数作用域
+        //function t(flag)
+        //{
+        //    if (flag)
+        //    {
+        //        s = "ok";
+        //        for (var i = 0; i < 2; i++);
+        //    }
+        //    console.log(i);
+        //}
+        //t(true);
+        //console.log(s);
+
+        //var name = '测试';
+        //function xx()
+        //{
+        //    var name = "no"
+        //    console.log(this.name);
+        //}
+        //xx();
+
+
+        ////this含义
+        //var name = '测试';
+        //function xx() {
+        //    var name = "no"
+        //    console.log(this.name);
+        //}
+        //xx();
+
+
+        //function car(){ 
+        //    var wheel = 3; //私有变量 
+        //    this.wheel = 4; //公有变量 
+        //    console.log(wheel); 
+        //    console.log(this.wheel);
+        //    function tt()
+        //    {
+        //        console.log(this.wheel);
+        //    }
+        //    tt();
+        //} 
+        //var car1 = new car();
+
+    </script>
+
+
+
+</body>
+</html> 
